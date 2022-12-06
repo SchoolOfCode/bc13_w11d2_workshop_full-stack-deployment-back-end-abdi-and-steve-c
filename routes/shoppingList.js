@@ -1,5 +1,5 @@
 import express from "express";
-import { getShoppingList, postListItem } from "../models/shoppingList.js";
+import { getShoppingList, postListItem, updateListById} from "../models/shoppingList.js";
 
 const router = express.Router();
 
@@ -14,5 +14,10 @@ router.post("/", async (req, res) => {
   const result = await postListItem(listItem);
   res.status(201).json({ success: true, payload: result });
 });
-
+router.patch("/:id", async function (req, res) {
+  const data = req.body;
+  console.log(data)
+  const updatedList = await updateListById(req.params.id, data);
+  res.json({ success: true, payload: updatedList });
+});
 export default router;

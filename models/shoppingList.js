@@ -14,6 +14,12 @@ export async function postListItem(listItem) {
       completed
     ) VALUES ($1,$2) RETURNING *;`,
     [item, completed]
-  );
+  );  
   return data.rows[0];
 }
+export async function updateListById(id, updates) {
+  // Query the database to update an author and return the newly updated author
+  const result = await pool.query("UPDATE shopping SET completed= $1 WHERE id = $2 RETURNING *", [updates.completed,id]);
+  const updateListByID = result.rows;
+  return updateListByID;
+};
